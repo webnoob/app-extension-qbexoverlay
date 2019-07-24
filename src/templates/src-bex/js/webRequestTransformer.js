@@ -1,7 +1,7 @@
 chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
     let
-      pattern = /css\/[a-z0..9].*\.[a-z0..9].*\.css$/g,
+      pattern = /css\/[a-z0..9].*\.[a-z0..9].*\.(css|js)$/g,
       matches = details.url.match(pattern)
 
     if(matches && matches.length > 0) {
