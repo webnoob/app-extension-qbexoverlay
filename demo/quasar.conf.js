@@ -53,7 +53,8 @@ module.exports = function (ctx) {
 
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify',
+        'LocalStorage'
       ]
     },
 
@@ -80,7 +81,7 @@ module.exports = function (ctx) {
     },
 
     devServer: {
-      // https: true,
+      https: true,
       // port: 8080,
       open: true // opens browser window automatically
     },
@@ -91,7 +92,7 @@ module.exports = function (ctx) {
     ssr: {
       pwa: false
     },
-    
+
     htmlVariables: {
       proton: {
         csp: 'TEST'

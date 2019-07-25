@@ -21,13 +21,14 @@ const chainWebpack = function (api, ctx, chain, { isClient }) {
     // This might seem strange but we need Quasar to add the mode and copy the files before we can merge.
     // Note: We're not using api.render('./templates') in install.js because if we do, it'll create the
     // src-bex folder which means Quasar core won't and in turn won't copy the template files over.
+    renderFile('initBexOverlay.js', api)
+    renderFile('webRequestTransformer.js', api)
+    renderFile('detector.js', api)
+
     if (requiresInit) {
       const
         mergeWith = require('lodash.mergewith'),
         initManifest = require('./manifest')
-
-      renderFile('initBexOverlay.js', api)
-      renderFile('webRequestTransformer.js', api)
 
       console.log(chalk.yellow(`    Merging manifest.json`))
       const mergedManifest = mergeWith(manifest, initManifest, (objValue, srcValue) => {

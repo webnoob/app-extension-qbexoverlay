@@ -12,6 +12,9 @@
           <q-icon name="menu" />
         </q-btn>
 
+        <q-btn  color="white" class="text-black on-right" @click="setLocalStorage">Set local storage</q-btn>
+        <q-btn color="white" class="text-black on-right" @click="getLocalStorage">Get local storage</q-btn>
+
         <q-toolbar-title>
           Quasar App
         </q-toolbar-title>
@@ -91,7 +94,7 @@
 </template>
 
 <script>
-import { openURL } from 'quasar'
+import { openURL, uid } from 'quasar'
 
 export default {
   name: 'MyLayout',
@@ -101,7 +104,17 @@ export default {
     }
   },
   methods: {
-    openURL
+    openURL,
+    setLocalStorage () {
+      this.$q.localStorage.set('someKeyForLocalStorage', uid())
+    },
+    getLocalStorage () {
+      this.$q.localStorage.getItem('someKeyForLocalStorage').then(r => {
+        this.$q.notify({
+          message: r
+        })
+      })
+    }
   }
 }
 </script>

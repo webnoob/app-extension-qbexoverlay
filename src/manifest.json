@@ -5,19 +5,21 @@
     ],
     "persistent": true
   },
-  "content_scripts": [{
-    "js": [
-      "js/initBexOverlay.js"
-    ]
-  }],
+  "content_scripts": [
+    {
+      "js": [
+        "js/initBexOverlay.js"
+      ]
+    }
+  ],
   "permissions": [
     "webRequest",
     "webRequestBlocking",
-    "<all_urls>"
+    "<all_urls>",
+    "storage"
   ],
   "web_accessible_resources": [
-    "js/initBexOverlay.js",
-    "js/webRequestTransformer.js"
+    "www/bex-*.js"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval' http://127.0.0.1; object-src 'self'"
 }
