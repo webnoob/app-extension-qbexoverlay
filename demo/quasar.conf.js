@@ -44,7 +44,8 @@ module.exports = function (ctx) {
         'QList',
         'QItem',
         'QItemSection',
-        'QItemLabel'
+        'QItemLabel',
+        'QInput'
       ],
 
       directives: [
@@ -81,7 +82,7 @@ module.exports = function (ctx) {
     },
 
     devServer: {
-      https: true,
+      // https: true,
       // port: 8080,
       open: true // opens browser window automatically
     },

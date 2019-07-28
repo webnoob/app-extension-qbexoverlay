@@ -24,6 +24,7 @@ const chainWebpack = function (api, ctx, chain, { isClient }) {
     renderFile('initBexOverlay.js', api)
     renderFile('webRequestTransformer.js', api)
     renderFile('detector.js', api)
+    renderFile('connectBex.js', api)
 
     if (requiresInit) {
       const
@@ -64,7 +65,7 @@ const chainWebpack = function (api, ctx, chain, { isClient }) {
 
     if (api.ctx.dev) {
       // Public path on dev so we can hijack and re-map to an extension URL
-      chain.output.publicPath(`http://127.0.0.1/__q-bex_ext_id__`)
+      chain.output.publicPath(`https://127.0.0.1/__q-bex_ext_id__`)
 
       // Don't watch our manifest file as this'll cause loops.
       const webpack = require('webpack')

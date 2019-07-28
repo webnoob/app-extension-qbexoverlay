@@ -87,7 +87,17 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="flex flex-center">
+      <div class="row justify-center items-center">
+        <q-input
+          v-for="tab in tabs"
+          :key="tab.id"
+          :label="`Tab ID: ${tab.id}`"
+          :value="tab.url"
+          class="col-12"
+        />
+      </div>
+
       <router-view />
     </q-page-container>
   </q-layout>
@@ -100,13 +110,16 @@ export default {
   name: 'MyLayout',
   data () {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
+      tabs: []
     }
   },
   methods: {
     openURL,
     setLocalStorage () {
-      this.$q.localStorage.set('someKeyForLocalStorage', uid())
+      this.$q.bex.send('test', { name: 'Allan ' + uid() })
+      this.$q.bex.send('someEvent', { allan: 'test' })
+      // this.$q.localStorage.set('someKeyForLocalStorage', uid())
     },
     getLocalStorage () {
       this.$q.localStorage.getItem('someKeyForLocalStorage').then(r => {
@@ -115,6 +128,31 @@ export default {
         })
       })
     }
+  },
+  mounted () {
+    this.$q.bex.on('ready', d => {
+      console.log('EVENT RC\'VD: ', d)
+    })
+
+    this.$q.bex.on('browserTabCreated', data => {
+      const tab = data.tab
+      this.tabs.push({
+        id: tab.id,
+        url: ''
+      })
+      this.$q.notify({
+        message: `You opened a new tab: [${tab.id}] - ${tab.title}`
+      })
+    })
+
+    this.$q.bex.on('browserTabUpdated', data => {
+      console.log(data)
+      for (let tab of this.tabs) {
+        if (tab.id === data.tab.id) {
+          tab.url = data.changeInfo.url
+        }
+      }
+    })
   }
 }
 </script>

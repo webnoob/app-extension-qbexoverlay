@@ -1,8 +1,8 @@
 <template>
   <q-page class="flex flex-center">
-    <div class="box fixed-center flex flex-center">
+    <!--<div class="box fixed-center flex flex-center">
       This is an overlay extension!
-    </div>
+    </div>-->
   </q-page>
 </template>
 

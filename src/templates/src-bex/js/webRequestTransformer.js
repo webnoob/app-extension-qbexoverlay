@@ -8,7 +8,7 @@ chrome.webRequest.onBeforeRequest.addListener(
       return { redirectUrl: chrome.extension.getURL('www/' + matches[0]) }
     }
 
-    pattern = /http:\/\/127\.0\.0\.1\/__q-bex_ext_id__/g
+    pattern = /https:\/\/127\.0\.0\.1\/__q-bex_ext_id__/g
     matches = details.url.match(pattern)
     if (matches && matches.length > 0) {
       return { redirectUrl: chrome.extension.getURL(details.url.replace(pattern, 'www/')) }

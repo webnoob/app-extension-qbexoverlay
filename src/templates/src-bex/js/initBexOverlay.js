@@ -1,3 +1,4 @@
+
 /**
  * THIS FILE IS GENERATED AUTOMATICALLY.
  * DO NOT EDIT.
@@ -53,7 +54,7 @@ window.addEventListener('message', event => {
   }
 }, false)
 
-;(window.onload = function () {
+;(function () {
   const div = document.createElement('div')
   div.id = 'q-bex-app'
   document.body.prepend(div)
@@ -83,8 +84,11 @@ window.addEventListener('message', event => {
     if (chunks.app.css) {
       addCss(chunks.app.css[0])
     }
+
     loadScript(`www/${chunks.app.js[0]}`, () => {
-      loadScript('js/detector.js', () => {})
+      loadScript('js/detector.js', () => {
+        loadScript('js/connectBex.js', () => {})
+      })
     })
   }
-})
+})()
