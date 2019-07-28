@@ -131,7 +131,7 @@ export default {
   },
   mounted () {
     this.$q.bex.on('ready', d => {
-      console.log('EVENT RC\'VD: ', d)
+      console.log('Bex backend ready')
     })
 
     this.$q.bex.on('browserTabCreated', data => {
@@ -146,7 +146,6 @@ export default {
     })
 
     this.$q.bex.on('browserTabUpdated', data => {
-      console.log(data)
       for (let tab of this.tabs) {
         if (tab.id === data.tab.id) {
           tab.url = data.changeInfo.url

@@ -3,30 +3,30 @@
 ;(function () {
   window.QBexInit({
     connect (cb) {
-      let fakeBridge = {
-        send (m) {
-          console.log('Sending Message: ', m)
+      let proxyBridge = {
+        send (event, payload) {
+          window.postMessage({ event, payload, source: 'bex' })
         },
-        listen (fn) {
-          console.log('Fake Listen')
-          fn()
+        on (event, cb) {
+          const fn = (payload) => {
+            if (event === payload.data.type) {
+              window.removeEventListener(event, fn)
+              cb(payload.data.result)
+            }
+          }
+          window.addEventListener('message', fn)
         }
       }
 
       window.__Q_BEX_HOOK__ = {
-        emit (event, data) {
+        emit (event, Vue) {
           if (event === 'init') {
-            data.$q.bex = {
-              on () {
-              },
-              emit () {
-              }
-            }
+            // Here we can access Vue.$q.localStorage etc...
           }
         }
       }
 
-      cb(fakeBridge)
+      cb(proxyBridge)
     }
   })
 })()

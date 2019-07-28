@@ -33,9 +33,6 @@ function addCss (src) {
 }
 
 window.addEventListener('message', event => {
-  // We only accept messages from ourselves
-  if (event.source !== window) return
-
   if (event.data.type && event.data.type === 'bex.chrome.storage.get') {
     const key = event.data.key
     console.log('getting ', key)
@@ -55,6 +52,21 @@ window.addEventListener('message', event => {
 }, false)
 
 ;(function () {
+  // connect to our actual browser extension instance
+  const port = chrome.runtime.connect(chrome.runtime.id)
+
+  // Create a proxy listener between our background port connection and our OverlayBex
+  port.onMessage.addListener(t => {
+    window.postMessage({ type: t[0].event, result: t[0].payload }, '*')
+  })
+
+  // Create a proxy sender between our overlay and background
+  window.addEventListener('message', event => {
+    if (event.data.source === 'bex') {
+      port.postMessage(event.data)
+    }
+  })
+
   const div = document.createElement('div')
   div.id = 'q-bex-app'
   document.body.prepend(div)
